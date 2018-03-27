@@ -1,43 +1,40 @@
 package gyg.amine.gygberlin.reviews.models
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 
 data class Review(
 
     @SerializedName("review_id")
-    private val reviewId: Int,
+    val reviewId: Int,
 
     @SerializedName("rating")
-    private var rating: String,
+    var rating: String,
 
     @SerializedName("title")
-    private var title: String,
+    var title: String,
+
     @SerializedName("message")
-    private var message: String,
+    var message: String,
 
     @SerializedName("author")
-    private var author: String,
+    var author: String,
 
     @SerializedName("foreignLanguage")
-    private var foreignLanguage: Boolean,
+    var foreignLanguage: Boolean,
 
     @SerializedName("date")
-    private var date: String,
-
-    @SerializedName("date_unformatted")
-    private var dateUnformatted: Date?,
+    var date: String,
 
     @SerializedName("languageCode")
-    private var languageCode: String,
+    var languageCode: String,
 
     @SerializedName("traveler_type")
-    private var travelerType: String,
+    var travelerType: String,
 
     @SerializedName("reviewerName")
-    private var reviewerName: String,
+    var reviewerName: String,
 
     @SerializedName("reviewerCountry")
-    private var reviewerCountry: String
+    var reviewerCountry: String
 )

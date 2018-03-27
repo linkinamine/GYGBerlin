@@ -1,6 +1,7 @@
 package gyg.amine.gygberlin.core.di.modules
 
 import android.app.Application
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.*
@@ -59,6 +60,7 @@ class NetworkModule {
     @Singleton
     fun providesOkHttp(cache: Cache, loggingInterceptor: HttpLoggingInterceptor) = getBaseBuilder(cache)
         .addNetworkInterceptor(CachingControlInterceptor())
+        .addNetworkInterceptor(StethoInterceptor())
         .addInterceptor(loggingInterceptor)
         .build()
 }
