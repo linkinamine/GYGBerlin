@@ -17,6 +17,7 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(private var api: Endpoints, disposable: CompositeDisposable, scheduler: SchedulerProvider) : BasePresenter<MainView>(disposable, scheduler), ReviewsHolder.Callbacks {
 
     override fun onReviewItemSelected(review: Review) {
+        //we have access to the selected review
     }
 
     fun fetchReviews(applicationContext: Context) {
@@ -31,7 +32,11 @@ class MainPresenter @Inject constructor(private var api: Endpoints, disposable: 
 
         val myJson = inputStreamToString(applicationContext.resources.openRawResource(R.raw.reviews))
         val reviews = myJson?.let { Gson().fromJson(it, ReviewsResponse::class.java) }
-        reviews?.let { onFetchReviewsSuccess(it) }
+        if (reviews != null) {
+            onFetchReviewsSuccess(reviews)
+        } else {
+            onFetchReviewsFailure()
+        }
     }
 
     private fun onFetchReviewsSuccess(result: ReviewsResponse) {
@@ -40,7 +45,7 @@ class MainPresenter @Inject constructor(private var api: Endpoints, disposable: 
         if (result.data == null || result.data.isEmpty()) {
             view?.noResult()
         } else {
-            view?.onSearchResponse(result.data)
+            view?.onFetchReviewsSuccess(result.data)
         }
     }
 
@@ -59,4 +64,28 @@ class MainPresenter @Inject constructor(private var api: Endpoints, disposable: 
         }
 
     }
+
+    /**
+     * We create the post request
+     */
+    fun addReview(review: Review) {
+        view?.showProgress()
+
+        val observable = api.addReview(review)
+        val subscription = observable.subscribeOn(scheduler.io()).observeOn(scheduler.ui()).subscribe({ onAddReviewSuccess(it) }, { onAddReviewFailure() })
+        disposable.add(subscription)
+
+    }
+
+    private fun onAddReviewSuccess(result: Review) {
+        view?.hideProgress()
+
+        view?.reviewAdded()
+    }
+
+    private fun onAddReviewFailure() {
+        view?.hideProgress()
+        view?.onError()
+    }
+
 }
