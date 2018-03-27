@@ -2,6 +2,7 @@ package gyg.amine.gygberlin.core
 
 import android.app.Application
 import gyg.amine.gygberlin.core.di.component.AppComponent
+import gyg.amine.gygberlin.core.di.component.DaggerAppComponent
 import gyg.amine.gygberlin.core.di.modules.AppModule
 
 class App : Application() {
@@ -19,4 +20,4 @@ class App : Application() {
     private fun initDagger() {
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
     }
-}.
+}
