@@ -27,7 +27,7 @@ class MainActivity : BaseActivity(), MainView {
     private var reviewsList: List<Review>? = null
     private val sortModeDescending = "DESC"
 
-
+    //Lifecycle and  injection
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,15 +48,11 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
 
         return when (item.itemId) {
             R.id.family_young -> {
@@ -84,6 +80,33 @@ class MainActivity : BaseActivity(), MainView {
         }
     }
 
+    // MainView overridden functions
+    override fun onFetchReviewsSuccess(reviews: List<Review>) {
+        adapter.updateData(reviews)
+        reviewsList = reviews
+    }
+
+    override fun showProgress() {
+        cm_str.isRefreshing = true
+    }
+
+    override fun hideProgress() {
+        cm_str.isRefreshing = false
+    }
+
+    override fun noResult() {
+        createSnackBar("No Result")
+    }
+
+    override fun onError() {
+        createSnackBar("There was an error fetching the reviews")
+    }
+
+    override fun reviewAdded(review: Review) {
+        createSnackBar("Thanks for your review : " + review.reviewerName)
+    }
+
+    //Private methods
     private fun filterReviews(travelerType: String) {
         val sortedReviews = reviewsList?.let { it.filter { r -> r.travelerType == travelerType } }
         sortedReviews?.let {
@@ -117,6 +140,27 @@ class MainActivity : BaseActivity(), MainView {
         }
     }
 
+    private fun initializeRecyclerView() {
+        cm_rv.layoutManager = manager
+        cm_rv.adapter = adapter
+        cm_str.setBackgroundResource(R.color.primary_material_dark)
+        cm_str.isEnabled = true
+        cm_str.setOnRefreshListener { presenter.fetchReviews(applicationContext) }
+    }
+
+    private fun createSnackBar(message: String) {
+        Snackbar.make(this.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+    }
+
+    private fun initializeAdapter(): ReviewsHolder = ReviewsHolder(presenter)
+
+    private fun forrmatReviewDate(reviewDate: String): Long {
+        val sdf = SimpleDateFormat("MMM dd, yyyy")
+        val date = sdf.parse(reviewDate)
+        return date.time
+    }
+
+    //View group click listeners
     fun onRatingsGroupClickListener(item: MenuItem) {
         when {
             item.itemId == R.id.ratings_highest -> {
@@ -150,48 +194,4 @@ class MainActivity : BaseActivity(), MainView {
         }
     }
 
-    override fun onFetchReviewsSuccess(reviews: List<Review>) {
-        adapter.updateData(reviews)
-        reviewsList = reviews
-    }
-
-    override fun showProgress() {
-        cm_str.isRefreshing = true
-    }
-
-    override fun hideProgress() {
-        cm_str.isRefreshing = false
-    }
-
-    override fun noResult() {
-        createSnackbar("No Result")
-    }
-
-    override fun onError() {
-        createSnackbar("There was an error fetching the reviews")
-    }
-
-    override fun reviewAdded() {
-        createSnackbar("Thanks for your review")
-    }
-
-    private fun initializeRecyclerView() {
-        cm_rv.layoutManager = manager
-        cm_rv.adapter = adapter
-        cm_str.setBackgroundResource(R.color.primary_material_dark)
-        cm_str.isEnabled = true
-        cm_str.setOnRefreshListener { presenter.fetchReviews(applicationContext) }
-    }
-
-    private fun createSnackbar(message: String) {
-        Snackbar.make(this.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
-    }
-
-    private fun initializeAdapter(): ReviewsHolder = ReviewsHolder(presenter)
-
-    private fun forrmatReviewDate(reviewDate: String): Long {
-        val sdf = SimpleDateFormat("MMM dd, yyyy")
-        val date = sdf.parse(reviewDate)
-        return date.time
-    }
 }

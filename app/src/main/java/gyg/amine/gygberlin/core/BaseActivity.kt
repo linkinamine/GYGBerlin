@@ -6,6 +6,10 @@ import gyg.amine.gygberlin.core.di.component.AppComponent
 import gyg.amine.gygberlin.core.mvp.BasePresenter
 import gyg.amine.gygberlin.core.mvp.BaseView
 
+/**
+ * Our activities can implement this class, so we provide the lifecycle components as well as our [BasePresenter]
+ * notice that the injection is provided here through [onActivityInject]
+ */
 abstract class BaseActivity : AppCompatActivity(), BaseView {
 
     private var presenter: BasePresenter<*>? = null

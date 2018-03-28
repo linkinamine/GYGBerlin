@@ -16,8 +16,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
+/**
+ * All of our modules are added as an array to our App Component and provided through as singletons
+ * Modules are defined here : [gyg.amine.gygberlin.core.di.modules]
+ */
 @Singleton
-@Component(modules = arrayOf(AppModule::class, RetrofitModule::class, ApiModule::class, NetworkModule::class))
+@Component(modules = [(AppModule::class), (RetrofitModule::class), (ApiModule::class), (NetworkModule::class)])
 interface AppComponent {
     fun application(): Application
     fun gson(): Gson

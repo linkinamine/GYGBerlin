@@ -8,6 +8,9 @@ import gyg.amine.gygberlin.reviews.api.Endpoints
 import gyg.amine.gygberlin.reviews.main.MainPresenter
 import io.reactivex.disposables.CompositeDisposable
 
+/**
+ *@Module and @Provides: define classes and methods which provide dependencies
+ */
 @Module
 class MainActivityModule {
 

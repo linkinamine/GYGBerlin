@@ -13,6 +13,10 @@ import java.io.IOException
 import java.io.InputStream
 import javax.inject.Inject
 
+/**
+ * We are handling here our api calls and propagating the results to our view
+ * basically we have now two calls to the api [fetchReviews] and [addReview]
+ */
 
 class MainPresenter @Inject constructor(private var api: Endpoints, disposable: CompositeDisposable, scheduler: SchedulerProvider) : BasePresenter<MainView>(disposable, scheduler), ReviewsHolder.Callbacks {
 
@@ -25,11 +29,12 @@ class MainPresenter @Inject constructor(private var api: Endpoints, disposable: 
 
         //The following commented code is the normal call to the Api
 
-        /*val url = "/berlin-l17/tempelhof-2-hour-airport-history-tour-berlin-airlift-more-t23776/reviews.json"
-        val observable = api.fetchReviews(url)
-        val subscription = observable.subscribeOn(scheduler.io()).observeOn(scheduler.ui()).subscribe({ onFetchReviewsSuccess(it) }, { onFetchReviewsFailure() })
-        disposable.add(subscription)*/
 
+        /*  val observable = api.fetchReviews()
+          val subscription = observable.subscribeOn(scheduler.io()).observeOn(scheduler.ui()).subscribe({ onFetchReviewsSuccess(it) }, { onFetchReviewsFailure() })
+          disposable.add(subscription)*/
+
+        //Here we are loading the data from a local json file
         val myJson = inputStreamToString(applicationContext.resources.openRawResource(R.raw.reviews))
         val reviews = myJson?.let { Gson().fromJson(it, ReviewsResponse::class.java) }
         if (reviews != null) {
@@ -65,9 +70,8 @@ class MainPresenter @Inject constructor(private var api: Endpoints, disposable: 
 
     }
 
-    /**
-     * We create the post request
-     */
+    // We create the post request here passing the whole review object
+
     fun addReview(review: Review) {
         view?.showProgress()
 
@@ -77,10 +81,9 @@ class MainPresenter @Inject constructor(private var api: Endpoints, disposable: 
 
     }
 
-    private fun onAddReviewSuccess(result: Review) {
+    private fun onAddReviewSuccess(review: Review) {
         view?.hideProgress()
-
-        view?.reviewAdded()
+        view?.reviewAdded(review)
     }
 
     private fun onAddReviewFailure() {

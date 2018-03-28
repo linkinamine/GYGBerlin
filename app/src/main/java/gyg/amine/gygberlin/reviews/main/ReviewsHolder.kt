@@ -36,7 +36,6 @@ class ReviewsHolder(val callbacks: Callbacks) : RecyclerView.Adapter<ReviewsHold
 
     fun updateData(newData: List<Review>) {
         items = newData
-
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -44,16 +43,17 @@ class ReviewsHolder(val callbacks: Callbacks) : RecyclerView.Adapter<ReviewsHold
             with(itemView) {
                 //Review
                 review_rating_iv.rating = item.rating.toFloat()
-                //setImageResource(handleRatingImageView(item.rating))
                 review_title_tv.text = item.title
                 review_date_tv.text = item.date
                 review_language_iv.setImageResource(handleReviewLanguageImageView(item.languageCode))
                 //Reviewer
                 reviewer_author_tv.text = item.author
                 item.travelerType?.let { reviewer_type_tv.text = "Reviewer type : $it" }
+
+                //We have access to the selected review if we want to display more details or for any further usage
+                row_review_cv.setOnClickListener { callbacks.onReviewItemSelected(item) }
             }
         }
-
     }
 
     private fun handleReviewLanguageImageView(language: String): Int {
