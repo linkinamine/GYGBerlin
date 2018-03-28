@@ -8,3 +8,4 @@
 # What's implemented ? 
 - The requirements should be met(hopefully).
 - Regarding this point :The app should function offline in any scenario (e.g. first time and returning user) the response is copied into a local jsonFile, but the codebase shows also how to fetch the reviews.
+- To do : Combine filtering, by creating a dynamic request builder for online results or combining mutliple filters and applying them to the parsed list.
