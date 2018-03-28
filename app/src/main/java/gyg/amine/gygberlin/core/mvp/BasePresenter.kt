@@ -4,7 +4,7 @@ import gyg.amine.gygberlin.core.schedulers.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import java.lang.ref.WeakReference
 
-open class BasePresenter<V : BaseView> constructor(private var disposable: CompositeDisposable, private var scheduler: SchedulerProvider) : Presenter<V> {
+open class BasePresenter<V : BaseView> constructor(var disposable: CompositeDisposable, var scheduler: SchedulerProvider) : Presenter<V> {
 
     // We are using WeakReference because the Activity could be destroyed at any time
     // and we don't want to create a memory leaks

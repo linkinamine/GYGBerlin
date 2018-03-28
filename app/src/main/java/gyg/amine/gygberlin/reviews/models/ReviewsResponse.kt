@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName
 data class ReviewsResponse(
 
     @SerializedName("status")
-    private val status: Boolean,
+     val status: Boolean,
 
     @SerializedName("total_reviews_comments")
-    private val totalReviewsComments: Int,
+     val totalReviewsComments: Int,
 
     @SerializedName("data")
-    private val data: List<Review>?
+     val data: List<Review>?
 )

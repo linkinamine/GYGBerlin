@@ -1,10 +1,68 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context="gyg.amine.gygberlin.reviews.main.MainActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
-    android:id="@+id/action_settings"
-    android:orderInCategory="100"
-    android:title="@string/action_settings"
-    app:showAsAction="never"/>
+    android:id="@+id/dates"
+    android:orderInCategory="1"
+    android:title="Dates"
+    app:showAsAction="always">
+    <menu>
+      <group
+        android:id="@+id/date_group">
+        <item
+          android:id="@+id/date_latest"
+          android:onClick="onDateGroupClickListener"
+          android:title="Latest"/>
+        <item
+          android:id="@+id/date_oldest"
+          android:onClick="onDateGroupClickListener"
+          android:title="Oldest"/>
+      </group>
+    </menu>
+  </item>
+  <item
+    android:id="@+id/ratings"
+    android:orderInCategory="1"
+    android:title="Ratings"
+    app:showAsAction="always">
+    <menu>
+      <group
+        android:id="@+id/ratings_group">
+        <item
+          android:id="@+id/ratings_highest"
+          android:onClick="onRatingsGroupClickListener"
+          android:title="Highest First"/>
+        <item
+          android:id="@+id/ratings_lowest"
+          android:onClick="onRatingsGroupClickListener"
+          android:title="Lowest First"/>
+      </group>
+    </menu>
+  </item>
+  <item
+    android:id="@+id/filter"
+    android:orderInCategory="2"
+    android:title="Filter"
+    app:showAsAction="always">
+
+    <menu>
+      <item
+        android:id="@+id/couple"
+        android:title="Couples"/>
+      <item
+        android:id="@+id/family_young"
+        android:title="Young family"/>
+      <item
+        android:id="@+id/family_old"
+        android:title="Old family"/>
+      <item
+        android:id="@+id/friends"
+        android:title="Group of friends"/>
+      <item
+        android:id="@+id/solo"
+        android:title="Solo travelers"/>
+
+    </menu>
+  </item>
 </menu>
