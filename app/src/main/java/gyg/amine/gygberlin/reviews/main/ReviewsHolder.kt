@@ -8,8 +8,6 @@ import gyg.amine.gygberlin.R
 import gyg.amine.gygberlin.reviews.extensions.notifyNewData
 import gyg.amine.gygberlin.reviews.models.Review
 import kotlinx.android.synthetic.main.review_row.view.*
-import java.text.DateFormat
-import java.util.*
 import kotlin.properties.Delegates
 
 
@@ -38,6 +36,7 @@ class ReviewsHolder(val callbacks: Callbacks) : RecyclerView.Adapter<ReviewsHold
 
     fun updateData(newData: List<Review>) {
         items = newData
+
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -50,8 +49,8 @@ class ReviewsHolder(val callbacks: Callbacks) : RecyclerView.Adapter<ReviewsHold
                 review_date_tv.text = item.date
                 review_language_iv.setImageResource(handleReviewLanguageImageView(item.languageCode))
                 //Reviewer
-                reviewer_name_tv.text = item.reviewerName
-                reviewer_country_tv.text = item.reviewerCountry
+                reviewer_author_tv.text = item.author
+                item.travelerType?.let { reviewer_type_tv.text = "Reviewer type : $it" }
             }
         }
 
@@ -64,9 +63,4 @@ class ReviewsHolder(val callbacks: Callbacks) : RecyclerView.Adapter<ReviewsHold
         }
     }
 
-    private fun formatReviewDate(date: Date): String {
-        val locale = Locale.getDefault()
-        val dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale)
-        return dateFormat.format(date)
-    }
 }
