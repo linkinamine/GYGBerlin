@@ -53,31 +53,7 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        return when (item.itemId) {
-            R.id.family_young -> {
-                filterReviews(TravelerType.FAMILY_YOUNG.toString().toLowerCase())
-                return true
-            }
-            R.id.family_old   -> {
-                filterReviews(TravelerType.FAMILY_OLD.toString().toLowerCase())
-                return true
-            }
-            R.id.friends      -> {
-                filterReviews(TravelerType.FRIENDS.toString().toLowerCase())
-                return true
-            }
-            R.id.couple       -> {
-                filterReviews(TravelerType.COUPLE.toString().toLowerCase())
-                return true
-            }
-            R.id.solo         -> {
-                filterReviews(TravelerType.SOLO.toString().toLowerCase())
-                return true
-            }
-
-            else              -> super.onOptionsItemSelected(item)
-        }
+        return super.onOptionsItemSelected(item)
     }
 
     // MainView overridden functions
@@ -160,7 +136,6 @@ class MainActivity : BaseActivity(), MainView {
         return date.time
     }
 
-    //View group click listeners
     fun onRatingsGroupClickListener(item: MenuItem) {
         when {
             item.itemId == R.id.ratings_highest -> {
@@ -170,9 +145,6 @@ class MainActivity : BaseActivity(), MainView {
             item.itemId == R.id.ratings_lowest  -> {
                 item.isChecked = true
                 sortReviewsByRatings()
-            }
-            else                                -> {
-                // Do nothing
             }
         }
     }
@@ -188,8 +160,34 @@ class MainActivity : BaseActivity(), MainView {
                 item.isChecked = true
                 sortReviewsByDate()
             }
-            else                            -> {
-                // Do nothing
+        }
+    }
+
+    fun onFilterGroupClickListener(item: MenuItem) {
+        when (item.itemId) {
+            R.id.family_young -> {
+                filterReviews(TravelerType.FAMILY_YOUNG.toString().toLowerCase())
+                item.isChecked = true
+            }
+            R.id.family_old   -> {
+                filterReviews(TravelerType.FAMILY_OLD.toString().toLowerCase())
+                item.isChecked = true
+
+            }
+            R.id.friends      -> {
+                filterReviews(TravelerType.FRIENDS.toString().toLowerCase())
+                item.isChecked = true
+
+            }
+            R.id.couple       -> {
+                filterReviews(TravelerType.COUPLE.toString().toLowerCase())
+                item.isChecked = true
+
+            }
+            R.id.solo         -> {
+                filterReviews(TravelerType.SOLO.toString().toLowerCase())
+                item.isChecked = true
+
             }
         }
     }

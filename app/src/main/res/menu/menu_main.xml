@@ -9,7 +9,8 @@
     app:showAsAction="always">
     <menu>
       <group
-        android:id="@+id/date_group">
+        android:id="@+id/date_group"
+        android:checkableBehavior="single">
         <item
           android:id="@+id/date_latest"
           android:onClick="onDateGroupClickListener"
@@ -28,7 +29,9 @@
     app:showAsAction="always">
     <menu>
       <group
-        android:id="@+id/ratings_group">
+        android:id="@+id/ratings_group"
+        android:checkableBehavior="single"
+        >
         <item
           android:id="@+id/ratings_highest"
           android:onClick="onRatingsGroupClickListener"
@@ -47,22 +50,30 @@
     app:showAsAction="always">
 
     <menu>
-      <item
-        android:id="@+id/couple"
-        android:title="Couples"/>
-      <item
-        android:id="@+id/family_young"
-        android:title="Young family"/>
-      <item
-        android:id="@+id/family_old"
-        android:title="Old family"/>
-      <item
-        android:id="@+id/friends"
-        android:title="Group of friends"/>
-      <item
-        android:id="@+id/solo"
-        android:title="Solo travelers"/>
-
+      <group
+        android:id="@+id/filter_group"
+        android:checkableBehavior="single">
+        <item
+          android:id="@+id/couple"
+          android:onClick="onFilterGroupClickListener"
+          android:title="Couples"/>
+        <item
+          android:id="@+id/family_young"
+          android:onClick="onFilterGroupClickListener"
+          android:title="Young family"/>
+        <item
+          android:id="@+id/family_old"
+          android:onClick="onFilterGroupClickListener"
+          android:title="Old family"/>
+        <item
+          android:id="@+id/friends"
+          android:onClick="onFilterGroupClickListener"
+          android:title="Group of friends"/>
+        <item
+          android:id="@+id/solo"
+          android:onClick="onFilterGroupClickListener"
+          android:title="Solo travelers"/>
+      </group>
     </menu>
   </item>
 </menu>
